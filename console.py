@@ -35,24 +35,24 @@ class HBNBCommand(cmd.Cmd):
 
     def _key_value_parser(self, args):
         """Parses a list of strings into a dictionary"""
-        NewDict = {}
+        new_dict = {}
         for arg in args:
             if "=" in arg:
                 kvp = arg.split('=', 1)
                 key = kvp[0]
-                val = kvp[1]
-                if val[0] == val[-1] == '"':
-                    val = shlex.split(val)[0].replace('_', ' ')
+                value = kvp[1]
+                if value[0] == value[-1] == '"':
+                    value = shlex.split(value)[0].replace('_', ' ')
                 else:
                     try:
-                        val = int(val)
+                        value = int(value)
                     except ValueError:
                         try:
-                            val = float(val)
+                            value = float(value)
                         except ValueError:
                             continue
-                NewDict[key] = val
-        return NewDict
+                new_dict[key] = value
+        return new_dict
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it and prints the ID"""
@@ -61,8 +61,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return False
         if args[0] in classes:
-            NewDict = self._key_value_parser(args[1:])
-            new_instance = classes[args[0]](**NewDict)
+            new_dict = self._key_value_parser(args[1:])
+            new_instance = classes[args[0]](**new_dict)
         else:
             print("** class doesn't exist **")
             return False
