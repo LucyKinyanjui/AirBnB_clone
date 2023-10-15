@@ -5,7 +5,7 @@ import cmd
 from datetime import datetime
 import models
 from models.amenity import Amenity
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -19,7 +19,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class HBNBCommand(cmd.Cmd):
     """Implement a custom prompt"""
-    prompt = '(hbnb) '
+    prompt = "(hbnb) "
 
     def do_EOF(self, arg):
         """Implement (Ctrl+D) to exit the program"""
@@ -46,10 +46,10 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     try:
                         val = int(val)
-                    except:
+                    except ValueError:
                         try:
                             val = float(val)
-                        except:
+                        except ValueError:
                             continue
                 NewDict[key] = val
         return NewDict
@@ -107,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
             def do_all(self, arg):
-                """ Prints all string representation of all instances based
+                """Prints all string representation of all instances based
                 or not on the class name"""
                 args = shlex.split(arg)
                 instance_list = []
@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
                 or updating attribute"""
                 args = shlex.split(arg)
                 int = ["numb_rooms", "numb_bathrooms",
-                        "max_guest", "price_by_night"]
+                       "max_guest", "price_by_night"]
                 floats = ["latitude", "longitude"]
                 if len(args) == 0:
                     print("** class name missing **")
@@ -143,14 +143,15 @@ class HBNBCommand(cmd.Cmd):
                                         if args[2] in int:
                                             try:
                                                 args[3] = int(args[3])
-                                            except:
+                                            except ValueError:
                                                 args[3] = 0
                                         elif args[2] in floats:
                                             try:
                                                 args[3] = float(args[3])
-                                            except:
+                                            except TypeError:
                                                 args[3] = 0.0
-                                    setattr(models.storage.all()[k], args[2], args[3])
+                                    setattr(models.storage.all()[k], args[2],
+                                            args[3])
                                     models.storage.all()[k].save()
                                 else:
                                     print("** value missing **")
@@ -162,6 +163,7 @@ class HBNBCommand(cmd.Cmd):
                         print("** instance id missing **")
                 else:
                     print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
