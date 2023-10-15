@@ -128,31 +128,32 @@ class HBNBCommand(cmd.Cmd):
                 """Updates an instance based on the class name and id by adding
                 or updating attribute"""
                 args = shlex.split(arg)
-                int = ["numb_rooms", "numb_bathrooms",
-                       "max_guest", "price_by_night"]
-                floats = ["latitude", "longitude"]
+                int_attributes = ["number_rooms", "number_bathrooms",
+                                  "max_guest", "price_by_night"]
+                float_attributes = ["latitude", "longitude"]
                 if len(args) == 0:
                     print("** class name missing **")
                 elif args[0] in classes:
                     if len(args) > 1:
                         k = args[0] + "." + args[1]
-                        if k in models.storage.all():
+                        all_istances = storage.all()
+                        if key in all_instances:
                             if len(args) > 2:
                                 if len(args) > 3:
                                     if args[0] == "Place":
-                                        if args[2] in int:
+                                        if args[2] in int_attributes:
                                             try:
                                                 args[3] = int(args[3])
                                             except ValueError:
                                                 args[3] = 0
-                                        elif args[2] in floats:
+                                        elif args[2] in float_attributes:
                                             try:
                                                 args[3] = float(args[3])
-                                            except TypeError:
+                                            except ValueError:
                                                 args[3] = 0.0
-                                    setattr(models.storage.all()[k], args[2],
+                                    setattr(all_instances[key], args[2],
                                             args[3])
-                                    models.storage.all()[k].save()
+                                    all_instances[key].save()
                                 else:
                                     print("** value missing **")
                             else:
