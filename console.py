@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] in classes:
             if len(args) > 1:
                 k = args[0] + "." + args[1]
-                all_instances = storage.all()
+                all_instances = models.storage.all()
                 if key in all_instances:
                     if len(args) > 2:
                         if len(args) > 3:
