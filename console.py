@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return False
         for key in instance_dict:
-            instance_dict.append(str(instance_dict[key]))
+            instance_list.append(str(instance_dict[key]))
         print("[", end="")
         print(", ".join(instance_list), end="")
         print("]")
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif args[0] in classes:
             if len(args) > 1:
-                k = args[0] + "." + args[1]
+                key = args[0] + "." + args[1]
                 all_instances = models.storage.all()
                 if key in all_instances:
                     if len(args) > 2:
